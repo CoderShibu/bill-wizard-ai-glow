@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-heading font-bold gradient-text">BillWizard</span>
+              <span className="text-2xl font-heading font-bold gradient-text">Gebill</span>
             </Link>
           </div>
           
@@ -30,12 +30,15 @@ const Navbar = () => {
             <Link to="/history" className="text-foreground/80 hover:text-primary transition-colors">
               History
             </Link>
+            <Link to="/help" className="text-foreground/80 hover:text-primary transition-colors">
+              Support
+            </Link>
             <div className="pl-4 border-l border-border">
               <ThemeToggle />
             </div>
-            <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
+            <Link to="/signin" className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
               Sign In
-            </button>
+            </Link>
           </div>
           
           <div className="md:hidden flex items-center">
@@ -86,12 +89,20 @@ const Navbar = () => {
             >
               History
             </Link>
-            <button 
-              className="w-full mt-2 bg-primary text-primary-foreground px-3 py-2 rounded-md hover:bg-primary/90 transition-colors"
+            <Link 
+              to="/help" 
+              className="block px-3 py-2 rounded-md text-foreground hover:bg-muted"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Support
+            </Link>
+            <Link 
+              to="/signin" 
+              className="w-full mt-2 bg-primary text-primary-foreground px-3 py-2 rounded-md hover:bg-primary/90 transition-colors block text-center"
               onClick={() => setMobileMenuOpen(false)}
             >
               Sign In
-            </button>
+            </Link>
           </div>
         </div>
       )}

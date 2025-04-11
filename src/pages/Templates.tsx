@@ -2,25 +2,15 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Eye, FileText, Plus, Search, Settings } from "lucide-react";
+import { FileText, Plus, Search } from "lucide-react";
+import { 
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger
+} from "@/components/ui/hover-card";
 
 const Templates = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  
-  // Template data - would come from API in real implementation
-  const templates = [
-    { id: 1, name: "Electric Bill", provider: "Energy Provider Inc.", fields: 12, lastUsed: "2025-04-02" },
-    { id: 2, name: "Water Bill", provider: "City Water Dept", fields: 10, lastUsed: "2025-03-15" },
-    { id: 3, name: "Gas Bill", provider: "National Gas Co", fields: 9, lastUsed: "2025-03-28" },
-    { id: 4, name: "Internet Bill", provider: "Fast Internet Inc", fields: 8, lastUsed: "2025-04-01" },
-    { id: 5, name: "Phone Bill", provider: "Mobile Carrier", fields: 11, lastUsed: "2025-03-10" },
-    { id: 6, name: "Rent", provider: "Property Management LLC", fields: 7, lastUsed: "2025-03-01" },
-  ];
-  
-  const filteredTemplates = templates.filter(template => 
-    template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    template.provider.toLowerCase().includes(searchQuery.toLowerCase())
-  );
   
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -58,68 +48,49 @@ const Templates = () => {
                   <option>Rent</option>
                   <option>Insurance</option>
                 </select>
-                <button className="p-2 rounded-md border border-input bg-background text-foreground hover:bg-muted transition-colors">
-                  <Settings className="h-5 w-5" />
-                </button>
               </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredTemplates.map((template) => (
-                <div key={template.id} className="border border-border rounded-lg overflow-hidden hover:border-primary/50 transition-colors">
-                  <div className="flex items-center justify-between p-4 border-b border-border">
-                    <div className="flex items-center">
-                      <FileText className="h-5 w-5 text-primary mr-2" />
-                      <h3 className="font-medium">{template.name}</h3>
-                    </div>
-                    <div className="flex gap-1">
-                      <button className="p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-                        <Eye className="h-4 w-4" />
-                      </button>
-                      <button className="p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-                        <Settings className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <div className="mb-3">
-                      <p className="text-sm text-muted-foreground">Provider</p>
-                      <p>{template.provider}</p>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <div>
-                        <span className="text-muted-foreground">Fields: </span>
-                        <span>{template.fields}</span>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Last used: </span>
-                        <span>{template.lastUsed}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-muted/50 p-3 flex justify-between">
-                    <button className="text-sm text-primary hover:text-primary/80 transition-colors">
-                      Use Template
-                    </button>
-                    <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                      Edit
-                    </button>
-                  </div>
+              {/* Empty state when no templates are available */}
+              <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <FileText className="h-8 w-8 text-primary" />
                 </div>
-              ))}
+                <h3 className="text-xl font-medium mb-2">No Templates Found</h3>
+                <p className="text-muted-foreground max-w-md mx-auto mb-6">
+                  You haven't created any templates yet. Create your first template to get started with automated bill scanning.
+                </p>
+                <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-4 py-2 rounded-md transition-colors inline-flex items-center gap-2">
+                  <Plus className="h-4 w-4" />
+                  Create First Template
+                </button>
+              </div>
               
               {/* Template card for adding new template */}
-              <div className="border border-dashed border-border rounded-lg overflow-hidden flex items-center justify-center min-h-[200px] hover:border-primary/50 transition-colors">
-                <div className="text-center p-6">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                    <Plus className="h-6 w-6 text-primary" />
+              <HoverCard>
+                <HoverCardTrigger asChild>
+                  <div className="border border-dashed border-border rounded-lg overflow-hidden flex items-center justify-center min-h-[200px] hover:border-primary/50 transition-colors hover:bg-accent/30 cursor-pointer">
+                    <div className="text-center p-6">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                        <Plus className="h-6 w-6 text-primary" />
+                      </div>
+                      <h3 className="font-medium mb-1">Create New Template</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Add a custom template for your bills
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="font-medium mb-1">Create New Template</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Add a custom template for your bills
-                  </p>
-                </div>
-              </div>
+                </HoverCardTrigger>
+                <HoverCardContent className="w-80">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold">Template Creation</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Create custom templates to match your bill formats for quicker and more accurate scanning.
+                    </p>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
             </div>
           </div>
           
