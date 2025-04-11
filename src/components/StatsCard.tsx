@@ -20,6 +20,14 @@ const StatsCard = ({ title, value, icon: Icon, trend }: StatsCardProps) => {
     
   // Animation state for gradient
   const [gradientPosition, setGradientPosition] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePosition({ x, y });
+  };
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,9 +42,18 @@ const StatsCard = ({ title, value, icon: Icon, trend }: StatsCardProps) => {
 
   return (
     <div 
-      className="glass-card p-6 transition-all duration-500 hover:translate-y-[-8px] hover:shadow-xl bg-gradient-to-r from-accent/40 via-primary/10 to-accent/40 hover:bg-gradient-to-r hover:from-primary/20 hover:via-accent/40 hover:to-primary/20 bg-[length:200%_200%] group"
+      className="glass-card p-6 transition-all duration-500 hover:translate-y-[-8px] hover:shadow-xl bg-gradient-to-r from-accent/40 via-primary/10 to-accent/40 hover:bg-gradient-to-r hover:from-primary/20 hover:via-accent/40 hover:to-primary/20 bg-[length:200%_200%] group relative overflow-hidden"
       style={gradientStyle}
+      onMouseMove={handleMouseMove}
     >
+      {/* Dynamic spotlight effect that follows cursor */}
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
+        style={{
+          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)`,
+        }}
+      />
+      
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm text-muted-foreground mb-1 group-hover:text-foreground/80 transition-colors duration-500">{title}</p>
@@ -54,6 +71,22 @@ const StatsCard = ({ title, value, icon: Icon, trend }: StatsCardProps) => {
       
       {/* Subtle pulse animation on the card */}
       <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 bg-primary/5 animate-pulse-slow -z-10"></div>
+      
+      {/* Floating particles */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden">
+        {[...Array(3)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-primary/30"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.4}s`,
+              animation: 'float-up 2.5s ease-in-out infinite'
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };

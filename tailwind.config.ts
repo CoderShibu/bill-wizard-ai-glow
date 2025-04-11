@@ -108,6 +108,7 @@ export default {
 			backgroundImage: {
 				'gradient-purple-blue': 'linear-gradient(135deg, var(--purple-dark) 0%, var(--blue-dark) 100%)',
 				'gradient-blue-purple': 'linear-gradient(135deg, var(--blue-light) 0%, var(--purple-light) 100%)',
+				'grid-pattern': 'linear-gradient(to right, rgba(158, 99, 255, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(158, 99, 255, 0.1) 1px, transparent 1px)',
 			}
 		}
 	},
