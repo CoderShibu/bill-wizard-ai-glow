@@ -14,7 +14,13 @@ const Index = () => {
       <main className="flex-grow">
         <HeroSection />
         
-        <section className="py-16 gradient-bg">
+        <section className="py-16 gradient-bg relative overflow-hidden">
+          {/* Background animated elements */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div className="absolute top-10 left-10 w-64 h-64 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse-slow"></div>
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-blue-500/10 rounded-full filter blur-3xl animate-pulse-slow" style={{animationDelay: '1s'}}></div>
+          </div>
+          
           <div className="container px-4 mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our AI Can Do</h2>
